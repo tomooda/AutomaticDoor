@@ -7,10 +7,8 @@ definitions
 operations
     tick : () ==> ()
     tick() ==
-        if
-            Sensor`detect()
-        then
-            Motor`open()
-        else
-            if Motor`isHalted() and not Motor`isClosing() then Motor`close();
+        if Sensor`detect()
+            then Motor`open()
+        elseif Motor`isHalted() and not Motor`isClosing()
+            then Motor`close();
 end AutomaticDoor
