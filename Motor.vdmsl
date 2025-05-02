@@ -26,8 +26,17 @@ operations
     halt : () ==> ()
     halt() == command := <halt>;
     
-    pure currentPosition : () ==> Position
-    currentPosition() == return position;
+    pure getPosition : () ==> Position
+    getPosition() == return position;
+    
+    setPosition : Position ==> ()
+    setPosition(p) == position := p;
+    
+    pure isOpening : () ==> bool
+    isOpening() == return command = <open>;
+    
+    pure isClosing : () ==> bool
+    isClosing() == return command = <close>;
     
     pure isHalted : () ==> bool
     isHalted() == return command = <halt>;
@@ -49,10 +58,4 @@ functions
     
     max : real * real -> real
     max(x, y) == if x >= y then x else y;
-operations
-    pure isOpen : () ==> bool
-    isOpen() == return position = OPEN_POSITION;
-    
-    pure isClosed : () ==> bool
-    isClosed() == return position = CLOSED_POSITION;
 end Motor

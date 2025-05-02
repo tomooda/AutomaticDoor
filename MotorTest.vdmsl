@@ -1,0 +1,38 @@
+module MotorTest
+imports
+    from Motor all,
+    from UnitTesting
+        operations
+            assert: bool * seq of char ==> () renamed assert;
+            assertEquals: ? * ? * seq of char ==> () renamed assertEquals;
+            assertApproxEquals: real * real * real * seq of char ==> ()
+                renamed assertApproxEquals;
+exports all
+definitions
+operations
+    test_open : () ==> ()
+    test_open() ==
+        (dcl position:real;
+        Motor`setPosition(Motor`CLOSED_POSITION);
+        Motor`open();
+        assert(Motor`isOpening(), "must be opening");
+        position := Motor`getPosition();
+        Motor`tick();
+        assert(Motor`getPosition() > position, "Position must increase");
+        while Motor`isOpening() do Motor`tick();
+        assertEquals(Motor`getPosition(), Motor`OPEN_POSITION, "open");
+        assert(Motor`isHalted(), "must be halted"));
+    
+    test_close : () ==> ()
+    test_close() ==
+        (dcl position:real;
+        Motor`setPosition(Motor`OPEN_POSITION);
+        Motor`close();
+        assert(Motor`isClosing(), "must be closing");
+        position := Motor`getPosition();
+        Motor`tick();
+        assert(Motor`getPosition() < position, "Position must decrease");
+        while Motor`isClosing() do Motor`tick();
+        assertEquals(Motor`getPosition(), Motor`CLOSED_POSITION, "closed");
+        assert(Motor`isHalted(), "must be halted"));
+end MotorTest

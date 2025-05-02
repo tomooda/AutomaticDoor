@@ -1,0 +1,19 @@
+module SensorTest
+imports
+    from Sensor all,
+    from UnitTesting
+        operations
+            assert: bool * seq of char ==> () renamed assert;
+            assertEquals: ? * ? * seq of char ==> () renamed assertEquals;
+            assertApproxEquals: real * real * real * seq of char ==> ()
+                renamed assertApproxEquals;
+exports all
+definitions
+operations
+    test_detect : () ==> ()
+    test_detect() ==
+        (Sensor`setSensor(true);
+        assert(Sensor`detect(), "must detect");
+        Sensor`setSensor(false);
+        assert(not Sensor`detect(), "must not detect"));
+end SensorTest
