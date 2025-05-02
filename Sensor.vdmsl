@@ -1,0 +1,14 @@
+module Sensor
+exports all
+definitions
+state Sensor of
+    sensor : bool
+init s == s = mk_Sensor(false)
+end
+operations
+    detect : () ==> bool
+    detect() == return sensor;
+    
+    setSensor : bool ==> ()
+    setSensor(s) == sensor := s;
+end Sensor

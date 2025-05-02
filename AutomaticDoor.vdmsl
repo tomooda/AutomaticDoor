@@ -1,0 +1,11 @@
+module AutomaticDoor
+imports
+    from Sensor all,
+    from Motor all
+exports all
+definitions
+operations
+    tick : () ==> ()
+    tick() ==
+        if Sensor`detect() then Motor`open() else if Motor`isHalted() then Motor`close();
+end AutomaticDoor
