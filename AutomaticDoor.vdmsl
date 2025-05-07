@@ -1,35 +1,30 @@
 module AutomaticDoor
 imports
-    from Time all,
     from Sensor all,
     from Motor all
 exports all
 definitions
 values
-    OPEN_DURATION : Time`Second = 1;
+    OPEN_DURATION : nat = 2;
 state AutomaticDoor of
-    closeTime : [Time`Second]
+    closeTime : [nat]
 init s == s = mk_AutomaticDoor(nil)
 end
 operations
     tick : () ==> ()
     tick() ==
-        let now = Time`now()
-        in
-            (if
-                Sensor`detect()
+        (if Sensor`detect()
+            then (closeTime := nil;
+            Motor`open())
+        elseif Motor`isOpen() and closeTime = nil
+            then closeTime := OPEN_DURATION
+        elseif is_nat(closeTime)
+            then if
+                closeTime > 0
             then
-                (closeTime := nil;
-                Motor`open())
+                closeTime := closeTime - 1
             else
-                (if
-                    Motor`isOpen() and closeTime = nil
-                then
-                    closeTime := now + OPEN_DURATION;
-                if
-                    is_real(closeTime) and now > closeTime
-                then
-                    (closeTime := nil;
-                    Motor`close()));
-            Motor`tick());
+                (closeTime := nil;
+                Motor`close());
+        Motor`tick());
 end AutomaticDoor

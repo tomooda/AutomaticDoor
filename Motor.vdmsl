@@ -1,15 +1,12 @@
 module Motor
-imports from Time all
 exports all
 definitions
 types
     Command = <open> | <close> | <halt>;
     
     Position = real inv p == 0.0 <= p and p <= 1.0;
-    
-    PositionPerSecond = real;
 values
-    SPEED : PositionPerSecond = 0.2;
+    SPEED : real = 0.2;
     
     OPEN_POSITION : Position = 1.0;
     
@@ -17,8 +14,7 @@ values
 state Motor of
     command : Command
     position : Position
-    lastTick : Time`Second
-init s == s = mk_Motor(<halt>, OPEN_POSITION, time  * Time`NANO)
+init s == s = mk_Motor(<halt>, OPEN_POSITION)
 end
 operations
     open : () ==> ()
@@ -53,16 +49,12 @@ operations
     
     tick : () ==> ()
     tick() ==
-        (dcl
-            now:Time`Second := Time`now(),
-            delta_t:Time`Second := now - lastTick;
-        lastTick := now;
-        cases command:
+        (cases command:
             <open> ->
-                (position := min(position + SPEED  * delta_t, OPEN_POSITION);
+                (position := min(position + SPEED, OPEN_POSITION);
                 if isOpen() then (command := <halt>)),
             <close> ->
-                (position := max(position - SPEED  * delta_t, CLOSED_POSITION);
+                (position := max(position - SPEED, CLOSED_POSITION);
                 if isClosed() then command := <halt>),
             others -> skip
             end);
