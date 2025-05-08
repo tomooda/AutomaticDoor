@@ -7,24 +7,16 @@ definitions
 values
     OPEN_DURATION : nat = 2;
 state AutomaticDoor of
-    closeTime : [nat]
-init s == s = mk_AutomaticDoor(nil)
+    timeToClose : nat
+init s == s = mk_AutomaticDoor(0)
 end
 operations
     tick : () ==> ()
     tick() ==
         (if Sensor`detect()
-            then (closeTime := nil;
+            then (timeToClose := OPEN_DURATION;
             Motor`open())
-        elseif Motor`isOpen() and closeTime = nil
-            then closeTime := OPEN_DURATION
-        elseif is_nat(closeTime)
-            then if
-                closeTime > 0
-            then
-                closeTime := closeTime - 1
-            else
-                (closeTime := nil;
-                Motor`close());
+        elseif Motor`isOpen()
+            then if timeToClose > 0 then timeToClose := timeToClose - 1 else Motor`close();
         Motor`tick());
 end AutomaticDoor
