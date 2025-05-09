@@ -15,7 +15,8 @@ end
 operations
     tick : () ==> ()
     tick() ==
-        (if Sensor`detect()
+        (Motor`tick();
+        if Sensor`detect()
             then (timeToClose := OPEN_DURATION;
             Motor`open())
         elseif Motor`isOpen()
@@ -23,6 +24,20 @@ operations
                 <TWO> -> timeToClose := <ONE>,
                 <ONE> -> timeToClose := <ZERO>,
                 <ZERO> -> Motor`close()
-                end;
-        Motor`tick());
+                end)
+    post 
+        (Sensor`detect() => not Motor`isClosing() and timeToClose = <TWO>)
+        and (not Sensor`detect() and Motor`isOpen() => timeToClose <> <TWO>);
+traces
+    TICK_ONLY:
+        tick() *;
+    
+    TICK_SENSOR_TICK_SENSOR_TICK:
+        (tick() *;
+        (Sensor`setSensor(true) |
+        Sensor`setSensor(false));
+        tick() *;
+        (Sensor`setSensor(true) |
+        Sensor`setSensor(false));
+        tick() *);
 end AutomaticDoor
