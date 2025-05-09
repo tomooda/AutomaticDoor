@@ -26,8 +26,10 @@ operations
                 <ZERO> -> Motor`close()
                 end)
     post 
-        (Sensor`detect() => not Motor`isClosing() and timeToClose = <TWO>)
-        and (not Sensor`detect() and Motor`isOpen() => timeToClose <> <TWO>);
+        (Sensor`detect()
+            => not Motor`isClosing() and timeToClose = OPEN_DURATION)
+        and (not Sensor`detect() and Motor`isOpen()
+            => timeToClose <> OPEN_DURATION);
 traces
     TICK_ONLY:
         tick() *;
