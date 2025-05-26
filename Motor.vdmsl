@@ -52,10 +52,10 @@ operations
         (cases command:
             <open> ->
                 (position := min(position + SPEED, OPEN_POSITION);
-                if isOpen() then (command := <halt>)),
+                if isOpen() then halt()),
             <close> ->
                 (position := max(position - SPEED, CLOSED_POSITION);
-                if isClosed() then command := <halt>),
+                if isClosed() then halt()),
             others -> skip
             end);
 functions
