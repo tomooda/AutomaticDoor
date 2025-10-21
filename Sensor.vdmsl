@@ -6,9 +6,8 @@ state Sensor of
 init s == s = mk_Sensor(false)
 end
 operations
-    detect : () ==> bool
+    pure detect : () ==> bool
     detect() == return sensor;
-    
     setSensor : bool ==> ()
     setSensor(s) == sensor := s;
 end Sensor

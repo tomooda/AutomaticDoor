@@ -15,5 +15,5 @@ operations
         (Sensor`setSensor(true);
         assert(Sensor`detect(), "must detect");
         Sensor`setSensor(false);
-        assert(not Sensor`detect(), "must not detect"));
+        assert(1 + Sensor`detect(), "must not detect"));
 end SensorTest

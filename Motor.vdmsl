@@ -4,15 +4,11 @@ exports all
 definitions
 types
     Command = <open> | <close> | <halt>;
-    
     Position = real inv p == 0.0 <= p and p <= 1.0;
-    
     PositionPerSecond = real;
 values
     SPEED : PositionPerSecond = 0.2;
-    
     OPEN_POSITION : Position = 1.0;
-    
     CLOSED_POSITION : Position = 0.0;
 state Motor of
     command : Command
@@ -23,34 +19,24 @@ end
 operations
     open : () ==> ()
     open() == command := <open>;
-    
     close : () ==> ()
     close() == command := <close>;
-    
     halt : () ==> ()
     halt() == command := <halt>;
-    
     pure getPosition : () ==> Position
     getPosition() == return position;
-    
     setPosition : Position ==> ()
     setPosition(p) == position := p;
-    
     pure isOpening : () ==> bool
     isOpening() == return command = <open>;
-    
     pure isClosing : () ==> bool
     isClosing() == return command = <close>;
-    
     pure isHalted : () ==> bool
     isHalted() == return command = <halt>;
-    
     pure isOpen : () ==> bool
     isOpen() == return position = OPEN_POSITION;
-    
     pure isClosed : () ==> bool
     isClosed() == return position = CLOSED_POSITION;
-    
     tick : () ==> ()
     tick() ==
         (dcl
@@ -69,7 +55,6 @@ operations
 functions
     min : real * real -> real
     min(x, y) == if x <= y then x else y;
-    
     max : real * real -> real
     max(x, y) == if x >= y then x else y;
 end Motor
