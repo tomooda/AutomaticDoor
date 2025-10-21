@@ -22,7 +22,6 @@ operations
         while Motor`isOpening() do Motor`tick();
         assertEquals(Motor`getPosition(), Motor`OPEN_POSITION, "open");
         assert(Motor`isHalted(), "must be halted"));
-    
     test_close : () ==> ()
     test_close() ==
         (dcl position:real;

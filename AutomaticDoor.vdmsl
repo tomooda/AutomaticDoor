@@ -33,7 +33,6 @@ operations
 traces
     TICK_ONLY:
         tick() *;
-    
     TICK_SENSOR_TICK_SENSOR_TICK:
         (tick() *;
         (Sensor`setSensor(true) |
