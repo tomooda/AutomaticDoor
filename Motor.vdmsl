@@ -12,7 +12,7 @@ values
 state Motor of
     command : Command
     position : Position
-init s == s = mk_Motor(<halt>, OPEN_POSITION)
+init s == s = mk_Motor(<halt>, 1.0)
 end
 operations
     open : () ==> ()

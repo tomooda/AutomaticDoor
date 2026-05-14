@@ -1,7 +1,14 @@
 module AutomaticDoor
 imports
-    from Sensor all,
-    from Motor all
+    from Sensor operations detect: () ==> bool;,
+    from Motor
+        operations
+            open: () ==> ();
+            close: () ==> ();
+            halt: () ==> ();
+            isOpen: () ==> bool;
+            isClosed: () ==> bool;
+            tick: () ==> ();
 exports all
 definitions
 values

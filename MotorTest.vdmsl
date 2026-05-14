@@ -33,5 +33,5 @@ operations
         assert(Motor`getPosition() < position, "Position must decrease");
         while Motor`isClosing() do Motor`tick();
         assertEquals(Motor`getPosition(), Motor`CLOSED_POSITION, "closed");
-        assert(not Motor`isHalted(), "must be halted"));
+        assert(Motor`isHalted(), "must be halted"));
 end MotorTest
